@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.mapper.RentTableMapper" >
+	<!-- public void makeRenttable(RentTable rentTable); -->
+	<insert id="makeRenttable">
+		insert into renttable values (default,#{imprest},#{shouldPayPrice},#{price},#{beginDate},#{shouldReturnDate},#{returnDate},#{rentFlag},#{custId},#{carId},#{userName})
+	</insert>
+	<!-- public List<RentTable> selAllRentTables(); -->
+	<select id="selAllRentTables" resultType="rentTable">
+		select * from renttable where returndate is null
+	</select>
+	<!-- public List<RentTable> selAllTableId(); -->
+	<select id="selAllTableId" resultType="rentTable">
+		select tableid from renttable where returndate is null
+	</select>
+	<!-- public RentTable selByTableID(Integer tableId); -->
+	<select id="selByTableID" resultType="rentTable">
+		select * from renttable where tableid=#{tableId}
+	</select>
+	
+	<!-- 	public List<RentTable> getRentTableByCondition(Map<String, Object> param); -->
+	<select id="getRentTableByCondition" resultType="rentTable">
+		select * from renttable where 1=1 
+				<if test="abc.tableId!=null and abc.tableId>0">
+					and tableid = #{abc.tableId}
+				</if>
+				<if test="abc.beginDate!=null">
+					and DATE_FORMAT(beginDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.beginDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.shouldReturnDate!=null">
+					and DATE_FORMAT(shouldReturnDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.shouldReturnDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.returnDate!=null">
+					and DATE_FORMAT(returnDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.returnDate},'%Y-%m-%d')
+				</if>
+
+		 		<if test="abc.userName!=null and abc.userName.trim().length()>0">
+					and username like concat('%',#{abc.userName},'%')
+				</if>
+				<if test="abc.carId!=null and abc.carId.trim().length()>0">
+					and carid like concat('%',#{abc.carId},'%')
+				</if>
+				<if test="abc.custId!=null and abc.custId.trim().length()>0">
+					and custid like concat('%',#{abc.custId},'%')
+				</if>
+				<if test="abc.rentFlag!=null and abc.rentFlag>-1">
+					and rentflag= #{abc.rentFlag}
+				</if>
+
+		limit #{startIndex},#{rows}
+	</select>
+	<!-- public int getCountByCondition(Map<String, Object> param); -->
+		<select id="getCountByCondition" resultType="int">
+		select count(*) from renttable where 1=1 
+				<if test="abc.tableId!=null and abc.tableId>0">
+					<!-- and username like '%7%' -->
+					and tableid = #{abc.tableId}
+				</if>
+ 				<if test="abc.beginDate!=null">
+					and DATE_FORMAT(beginDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.beginDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.shouldReturnDate!=null">
+					and DATE_FORMAT(shouldReturnDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.shouldReturnDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.returnDate!=null">
+					and DATE_FORMAT(returnDate,'%Y-%m-%d') = DATE_FORMAT(#{abc.returnDate},'%Y-%m-%d')
+				</if>
+
+				<if test="abc.userName!=null and abc.userName.trim().length()>0">
+					and username like concat('%',#{abc.userName},'%')
+				</if>
+				<if test="abc.carId!=null and abc.carId.trim().length()>0">
+					and carid like concat('%',#{abc.carId},'%')
+				</if>
+				<if test="abc.custId!=null and abc.custId.trim().length()>0">
+					and custid like concat('%',#{abc.custId},'%')
+				</if>
+				<if test="abc.rentFlag!=null and abc.rentFlag>-1">
+					and rentflag= #{abc.rentFlag}
+				</if> 
+	</select>
+		<!-- public void updRentFlagByTableId(Integer tableId); -->
+	<update id="updRentFlagByTableId">
+		update renttable set rentFlag=0 where tableId=#{tableId}
+	</update>
+	<!-- public void insReturnDate(Date returnDate, Integer tableId); -->
+	<update id="insReturnDate">
+		update renttable set returndate=#{checkDate} where tableid=#{rentId}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.rbac.mapper.PermissionMapper">
+	<!-- public List<Permission> getPermissionMenuByUserId(Integer userId); -->
+	<select id="getPermissionMenuByUserId" resultType="permission">
+		SELECT * FROM t_permission WHERE TYPE='menu'AND id IN (
+			 SELECT pid FROM t_role_permission WHERE rid=(
+			 SELECT rid FROM t_user_role WHERE uid=#{userId}))
+	</select>
+	
+	<!--  public List<Permission> getPermissionByUserId(Integer userId); -->
+	<select id="getPermissionByUserId" resultType="permission">
+		SELECT * FROM t_permission WHERE id IN (
+			 SELECT pid FROM t_role_permission WHERE rid=(
+			 SELECT rid FROM t_user_role WHERE uid=#{userId}))
+	</select>
+</mapper>

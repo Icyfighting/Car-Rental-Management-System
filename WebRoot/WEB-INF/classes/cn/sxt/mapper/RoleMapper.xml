@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sxt.mapper.RoleMapper">
+<!-- public List<Roles> getAllRoles(); -->
+	<select id="getAllRoles" resultType="roles">
+		select * from roles
+	</select>
+	
+	
+	<!-- public void addRoleMenuByRoleId(Map<String, Object> param); -->
+	<insert id="addRoleMenuByRoleId" >
+   		insert into roles_menus values 
+   		<foreach collection="menuIds" item="menuId" separator=",">
+   			(#{roleId},#{menuId})
+   		</foreach>
+	</insert>  
+	
+	<!-- public void deleteMenuByRoleId(Map<String, Object> param); -->
+	<delete id="deleteMenuByRoleId">
+		delete from roles_menus where roleid=#{roleId}
+	</delete>
+	
+	<!-- public void addRole(Map<String, Object> param); -->
+	<insert id="addRole">
+		insert into roles values (default,#{roleName})
+	</insert>
+	
+	
+	<!-- public Roles getRoleByName(Roles roles); -->
+	
+	<select id="getRoleByName" resultType="roles">
+		select * from roles where roleName=#{roleName}
+	</select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.mapper.CustomersMapper" >
+	
+	<!-- public List<Customers> selAllCustomers(int start, int size);; 查询所有客户-->
+	<select id="selAllCustomers" resultType="customers">
+		select * from customers limit #{0},#{1}
+	</select>
+	<!-- public List<Customers> selByCustomersNumber(String customersNumber, int start, int size); 根据身份证查询（模糊） -->
+	<select id="selByIdentity" resultType="customers" >
+		select * from customers where identity like concat('%',#{0},'%') limit #{1},#{2}
+	</select>
+	
+	<!-- public int selcustCount(); -->
+	<select id="selCustomersCount" resultType="int">
+		select count(*) from customers
+	</select>
+	<!-- public int selCarsCountByCondition(String carNumber); -->
+	<select id="selCustomersCountByCondition" resultType="int" >
+		select count(*) from customers where identity like concat('%', #{identity}, '%')  
+	</select>
+	<!-- public void delCar(String carNumber); -->
+	<delete id="delCustomers">
+	  delete from customers where identity=#{identity}
+	</delete>
+	<!-- public void updCar(Cars cars); -->
+	<update id="updCustomers">
+	  update customers set  custName=#{custName},sex=#{sex},address=#{address},
+	  phone=#{phone},career=#{career},custPwd=#{custPwd} 
+	  where identity=#{identity}
+	</update>
+		<!-- public void addCustomers(Customers customers) { -->
+	<insert id="addCustomers">
+	insert into customers values (#{identity},#{custName},#{sex},#{address},#{phone},#{career},#{custPwd})
+	</insert>
+		<!-- public List<Customers> selOneById(String identity); -->
+	<select id="selOneById" resultType="customers">
+		select * from customers where identity=#{identity}
+	</select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">  
+      
+      <!--数据源配置
+      	TransactionAspect.around被spring框架声明性事务替换
+      		around方法中sqlSession.commit() 事务具体操作  spring提供平台事务管理器中事务提交和回滚具体操作
+      		TransactionAspect.around 被spring提供tx:advice替换
+      		aop配置
+        -->
+       
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>  
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+ 
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="select*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice> 
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* cn.sxt.service..*(..))" id="myPointCut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"/>
+	</aop:config>
+</beans>

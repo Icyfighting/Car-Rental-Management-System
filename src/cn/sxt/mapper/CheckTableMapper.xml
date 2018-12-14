@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.mapper.CheckTableMapper" >
+
+	<!-- public List<CheckTable> getCheckTableByCondition(Map<String, Object> param); -->
+<select id="getCheckTableByCondition" resultType="checkTable">
+		select * from checktable where 1=1 
+				<if test="abc.checkId!=null and abc.checkId.trim().length()>0">
+					and checkid = #{abc.checkId}
+				</if>
+				<if test="abc.checkDate!=null">
+					and DATE_FORMAT(checkdate,'%Y-%m-%d') = DATE_FORMAT(#{abc.checkDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.checkUser!=null and abc.checkUser.trim().length()>0">
+					and checkuser like concat('%',#{abc.checkUser},'%')
+				</if>
+				<if test="abc.rentId!=null and abc.rentId>0">
+					and rentid= #{abc.rentId}
+				</if>
+
+		limit #{startIndex},#{rows}
+	</select>
+	<!-- public int getCountByCondition(Map<String, Object> param); -->
+
+	<!-- 	public List<RentTable> getRentTableByCondition(Map<String, Object> param); -->
+	
+	<!-- public int getCountByCondition(Map<String, Object> param); -->
+		<select id="getCountByCondition" resultType="int">
+		select count(*) from checktable where 1=1 
+				<if test="abc.checkId!=null and abc.checkId.trim().length()>0">
+					and checkid = #{abc.checkId}
+				</if>
+				<if test="abc.checkDate!=null">
+					and DATE_FORMAT(checkdate,'%Y-%m-%d') = DATE_FORMAT(#{abc.checkDate},'%Y-%m-%d')
+				</if>
+				<if test="abc.checkUser!=null and abc.checkUser.trim().length()>0">
+					and checkuser like concat('%',#{abc.checkUser},'%')
+				</if>
+				<if test="abc.rentId!=null and abc.rentId>0">
+					and rentid= #{abc.rentId}
+				</if>
+	</select>
+	
+	<!-- public void deleteByTableId(CheckTable checkTable); -->
+	
+	<delete id="deleteByTableId">
+		delete from checktable where checkId = #{checkId}
+	</delete>
+	
+		<!-- public void makeCheckTable(CheckTable checkTable); -->
+	<insert id="makeCheckTable">
+		insert into checktable values (default,#{checkDate},
+		#{field},#{problem},#{paying},#{checkUser},#{rentId}) 
+	</insert>
+	
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sxt.mapper.UserMapper">
+	<!-- public Users getUserByNameAndPwd(Users user); -->
+	<select id="getUserByNameAndPwd" resultType="users">
+		select * from users
+		where userName=#{userName} and userPwd=#{userPwd}
+	</select>
+
+	<!-- public List<Users> getUserByCondition(int start, int size, Users user); -->
+	<!-- where元素拼接sql语句where 如果不存在查询条件，不拼接where 将后续条件中第一个and自动去除 -->
+	<select id="getUserByCondition" resultType="users">
+		select u.*,r.rolename from users u left join roles r on
+		u.roleid=r.roleid where 1=1 
+				<if test="abc.userName!=null and abc.userName.trim().length()>0">
+					<!-- and username like '%7%' -->
+					and username like concat('%',#{abc.userName},'%')
+				</if>
+
+				<if test="abc.identity!=null and abc.identity.trim().length()>0">
+					and identity like concat('%',#{abc.identity},'%')
+				</if>
+				<if test="abc.fullName!=null and abc.fullName.trim().length()>0">
+					and fullname like concat('%',#{abc.fullName},'%')
+				</if>
+				<if test="abc.phone!=null and abc.phone.trim().length()>0">
+					and phone like concat('%',#{abc.phone},'%')
+				</if>
+
+		
+		limit #{startIndex},#{rows}
+	</select>
+
+
+
+	<select id="getCountByCondition" resultType="int">
+		select count(*) from users where 1=1 
+		<if test="abc.userName!=null and abc.userName.trim().length()>0">
+					<!-- and username like '%7%' -->
+					and username like concat('%',#{abc.userName},'%')
+				</if>
+
+				<if test="abc.identity!=null and abc.identity.trim().length()>0">
+					and identity like concat('%',#{abc.identity},'%')
+				</if>
+				<if test="abc.fullName!=null and abc.fullName.trim().length()>0">
+					and fullname like concat('%',#{abc.fullName},'%')
+				</if>
+				<if test="abc.phone!=null and abc.phone.trim().length()>0">
+					and phone like concat('%',#{abc.phone},'%')
+				</if>
+	</select>
+
+	<!-- public int deleteByUserName(Users user); -->
+	<delete id="deleteByUserName">
+		delete from users where userName = #{userName}
+	</delete>
+
+	<!-- public void updateUser(Users user); -->
+	<select id="updateUser">
+		update users set
+		identity=#{identity},fullname=#{fullName},sex=#{sex},address=#{address},phone=#{phone},roleid=#{roleId},position=#{position}
+		where username=#{userName}
+	</select>
+
+	<!-- public List<Roles> getRoles(); -->
+<!-- 	<select id="getRoles" resultType="roles">
+		select * from roles
+	</select> -->
+
+	<!-- public int addUser(Users user); -->
+	<select id="addUser">
+		insert into users values
+		(#{userName},#{identity},#{fullName},#{sex},#{address},#{phone},#{roleId},#{userPwd},#{position},#{picture})
+	</select>
+	
+	<!-- public List<Users> getAllUsers(); -->
+	<select id="getAllUsers" resultType="users">
+		select u.*,r.rolename from users u left join roles r on u.roleid=r.roleid
+	</select>
+	
+</mapper>

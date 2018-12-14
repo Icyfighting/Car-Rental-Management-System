@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sxt.mapper.LoginLogsMapper">
+	<!-- public void add(LoginLogs loginLogs); -->
+	<insert id="add">
+		insert into loginlogs values (default,#{loginName},#{loginIp},#{loginTime})
+	</insert>
+	
+	<!-- public List<LoginLogs> selectLoginLogByCondition(Map<String, Object> param); -->
+	<select id="selectLoginLogByCondition" resultType="loginLogs">
+		select * from loginlogs  where 1=1
+		<if test="abc.loginName!=null and abc.loginName.trim().length()>0">
+					and loginname like concat('%',#{abc.loginName},'%')
+				</if>
+
+				<if test="abc.loginIp!=null and abc.loginIp.trim().length()>0">
+					and loginip like concat('%',#{abc.loginIp},'%')
+				</if>
+				<if test="abc.loginTime!=null">
+					<!-- and logintime > #{abc.loginTime} -->
+					and DATE_FORMAT(logintime,'%Y-%m-%d') = DATE_FORMAT(#{abc.loginTime},'%Y-%m-%d')
+					
+					
+				</if>
+				
+		limit #{startIndex},#{rows}
+	</select>
+	
+	<!-- public int getCountByCondition(Map<String, Object> param); -->
+	<select id="getCountByCondition" resultType="Integer">
+		select count(*) from loginlogs  where 1=1
+		<if test="abc.loginName!=null and abc.loginName.trim().length()>0">
+					and loginname like concat('%',#{abc.loginName},'%')
+				</if>
+
+				<if test="abc.loginIp!=null and abc.loginIp.trim().length()>0">
+					and loginip like concat('%',#{abc.loginIp},'%')
+				</if>
+				<if test="abc.loginTime!=null ">
+					and DATE_FORMAT(logintime,'%Y-%m-%d') = DATE_FORMAT(#{abc.loginTime},'%Y-%m-%d')
+				</if>
+		
+	</select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.mapper.CarsMapper" >
+	
+	<!-- public List<Cars> selAllCars(); 查询所有汽车-->
+	<select id="selAllCars" resultType="cars">
+		select * from cars limit #{0},#{1}
+	</select>
+	<!-- public List<Cars> selByCarNumber(String carNumber) 根据车牌号查询（模糊） -->
+	<select id="selByCarNumber" resultType="cars" >
+		select * from cars where carnumber like CONCAT('%', #{0}, '%') limit #{1},#{2}
+	</select>
+	
+	<!-- public int selCarsCount(); -->
+	<select id="selCarsCount" resultType="int">
+		select count(*) from cars
+	</select>
+	<!-- public int selCarsCountByCondition(String carNumber); -->
+	<select id="selCarsCountByCondition" resultType="int" >
+		select count(*) from cars where carnumber like CONCAT('%', #{carNumber}, '%')  
+	</select>
+	<!-- public void delCar(String carNumber); -->
+	<delete id="delCar">
+	  delete from cars where carnumber=#{carNumber}
+	</delete>
+	<!-- public void updCar(Cars cars); -->
+	<update id="updCar">
+	  update cars set  cartype=#{carType},color=#{color},price=#{price},
+	  rentprice=#{rentPrice},deposit=#{deposit},isrenting=#{isrenting},description=#{description} 
+	  where carnumber=#{carNumber}
+	</update>
+	<!-- public void insCar(Cars cars); -->
+	<insert id="insCar">
+	  insert into cars values (#{carNumber},#{carType},#{color},#{price},#{rentPrice},#{deposit},#{isrenting},#{carPicture},#{description})
+	</insert>
+	<!-- public List<Cars> selByCustomerIdentity(String identity); -->
+	<select id="selByCustomerIdentity" resultType="cars">
+		select c.carnumber carNumber,c.cartype carType,c.color,c.price,c.rentprice rentPrice,c.deposit,c.carPicture from cars c join  renttable r on r.carid=c.carnumber join customers u on r.custid=u.identity 
+		where u.identity=#{srchValue }
+	</select>
+	<!-- public List<Cars> selByIsrenting(); -->
+	<select id="selByIsrenting" resultType="cars">
+		select carNumber,cartype,color,price,rentprice,deposit,carPicture from cars WHERE isrenting=0
+	</select>
+	<!-- public void updCarIsrenting(String carNumber); -->
+	<update id="updCarIsrenting">
+		update cars set isrenting=1 where carnumber=#{carNumber}
+	</update>
+	<!-- public List<Cars> selYesIsrenting(); -->
+	<select id="selYesIsrenting" resultType="cars">
+		select carNumber,cartype,color,price,rentprice,deposit,carPicture from cars WHERE isrenting=1
+	</select>
+	
+	<!-- public List<Cars> selOneByCarNumber(String carNumber); -->
+	<select id="selOneByCarNumber" resultType="cars">
+		select * from cars where carnumber=#{carNumber}
+	</select>
+	<!-- public void updIsrentingZero(String carNumber); -->
+	<update id="updIsrentingZero">
+		update cars set isrenting=0 where carnumber=#{carNumber}
+	</update>
+</mapper>

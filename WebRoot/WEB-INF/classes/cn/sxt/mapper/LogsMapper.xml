@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sxt.mapper.LogsMapper">
+	<!-- public void add(Logs logs); -->
+	<insert id="add">
+		insert into logs values
+		(default,#{userName},#{action},#{actionTime})
+	</insert>
+
+
+	<!-- public List<Logs> selectLogByCondition(Map<String, Object> param); -->
+	<select id="selectLogByCondition" resultType="logs">
+		select * from logs where 1=1
+		<if test="abc.userName!=null and abc.userName.trim().length()>0">
+			and username like concat('%',#{abc.userName},'%')
+		</if>
+
+		<if test="abc.action!=null and abc.action.trim().length()>0">
+			and action like concat('%',#{abc.action},'%')
+		</if>
+		<if test="abc.actionTime!=null">
+			<!-- and logintime > #{abc.loginTime} -->
+			and DATE_FORMAT(actionTime,'%Y-%m-%d') =
+			DATE_FORMAT(#{abc.actionTime},'%Y-%m-%d')
+
+
+		</if>
+
+		limit #{startIndex},#{rows}
+	</select>
+
+
+	<!-- public int getCountByCondition(Map<String, Object> param); -->
+	<select id="getCountByCondition" resultType="Integer">
+		select count(*) from logs where 1=1
+		<if test="abc.userName!=null and abc.userName.trim().length()>0">
+			and username like concat('%',#{abc.userName},'%')
+		</if>
+
+		<if test="abc.action!=null and abc.action.trim().length()>0">
+			and action like concat('%',#{abc.action},'%')
+		</if>
+		<if test="abc.actionTime!=null">
+			<!-- and logintime > #{abc.loginTime} -->
+			and DATE_FORMAT(actionTime,'%Y-%m-%d') =
+			DATE_FORMAT(#{abc.actionTime},'%Y-%m-%d')
+
+
+		</if>
+
+	</select>
+</mapper>

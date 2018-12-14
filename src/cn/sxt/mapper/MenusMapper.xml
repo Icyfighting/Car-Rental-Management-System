@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.sxt.mapper.MenusMapper">
+<!-- 	public List<Menus> getMenusByUserName(String userName); -->
+	<select id="getMenusByUserName" resultType="menus">
+		select menuid id,menuname text,connurl url,fatherid from menus where menuid in (
+		select menuid from roles_menus where roleid=(
+		select roleid from users where username=#{userName}));
+	</select>
+	
+	<!-- public List<Menus> getAllMenus(); -->
+	<select id="getAllMenus" resultType="treeNode">
+		select menuid id,menuname text,fatherid fatherId from menus
+		
+	</select>
+	
+	<!-- public List<Integer> getMenusByRoleId(Integer roleId); -->
+	<select id="getMenusByRoleId" resultType="Integer">
+		select menuid from roles_menus where roleid=#{roleId}
+		
+	</select>
+	
+</mapper>
