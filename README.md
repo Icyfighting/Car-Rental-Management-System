@@ -55,20 +55,20 @@ Log searching module provide operation including login records and operation rec
 ```
 
 ### Project-Directory-Structure
-> WEBROOT
->> WEB-INF
->>> business
->>> car
->>> customer
->>> user
->>> system
->>> rent
->>> check
->> static
-> resources
-> src
-> README
-> LICENSE
+* WEBROOT
+    * WEB-INF
+        * business
+        * car
+        * customer
+        * user
+        * system
+        * rent
+        * check 
+    * static
+* resources
+* src
+* README
+* LICENSE
 ### How-to-run
 #### Environment-Dependence 
 #### Deployment-Configuration
