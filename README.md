@@ -8,7 +8,7 @@ This project is training project that I completed in programing school.The proje
 
 
 ****
-##Table of Contents
-* [Functions Introduction](#Functions Introduction)
+## Table of Contents
+* [Functions Introduction](# Functions Introduction)
 * [How to run](#标题)
 ### Functions Introduction
