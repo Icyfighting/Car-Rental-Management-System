@@ -80,15 +80,21 @@ Log searching module provide operation including login records and operation rec
 * LICENSE
 ### How-to-run
 #### Environment-Dependence 
+```
 JDK 1.8
 Tomcat
 MySQL 5.0
+```
 #### Deployment-Configuration
+```
 1. modify database connection configuration in resources\resource\db.properties.
 2. Run sql file in src\sql to generate tables and initial test data in MySQL database.
 3. Deploy project and access root directory of project.
 4. Login with provided test user name and password.
+```
 #### Test-Information
+```
 user:admin
 passwd:a1231
+```
 
