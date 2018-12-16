@@ -8,28 +8,7 @@ This project is training project that I completed in programing school.The proje
 
 
 ****
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Table of Contents
-* [FunctionsIntroduction](#Car-Rental-Management-System)
+* [FunctionsIntroduction](#Functions-Introduction)
 * [How to run](#标题)
-### Functions Introduction
+### Functions-Introduction
