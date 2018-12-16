@@ -57,16 +57,24 @@ Log searching module provide operation including login records and operation rec
 ### Project-Directory-Structure
 * WEBROOT
     * WEB-INF
-        * business
-        * car
-        * customer
-        * user
-        * system
-        * rent
-        * check 
-    * static
-* resources
-* src
+        * car (car management module jsp)
+        * customer (client managemnt module jsp)
+        * user (user management module jsp)
+        * system (system management module jsp)
+        * rent (rent car module jsp)
+        * check (check table module jsp)
+        * main.jsp (main page when user login successfully)
+        * web.xml (configuration file)
+    * static (images, js, EasyUI themes)
+* resources (data base connection properties, SSM framework configuration)
+* src (java source files)
+    * sql (sql of db tables creation and initial test data insertion)
+    * cn/sxt
+        * controller (controller layer of SSM)
+        * service (service layer, interface and implements of main business logic)
+        * mapper (mapper layer, Mybatis .java and .xml files)
+        * pojo (entity class )
+        * interceptor (record login and modification operation with detail information)
 * README
 * LICENSE
 ### How-to-run
