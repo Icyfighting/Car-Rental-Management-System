@@ -10,21 +10,23 @@ This project is training project that I completed in programing school.The proje
 ****
 ## Table of Contents
 * [Functions Introduction](#Functions-Introduction)
-    * [System Menu](#System-Menu)
     * [User Management](#User-Management)
     * [Client Management](#Client-Management)
     * [Car Management](#Car-Management)
     * [Business Management](#Business-Management)
+    * [System Management](#System-Management)
 * [How to run](#How-to-run)
     * Environment Dependence
     * Deployment Configuration
     * Project Directory Structure
     
 ### Functions-Introduction
-#### System-Menu
+
 #### User-Management
 #### Client-Management
 #### Car-Management
 #### Business-Management
+#### System-Management
+
 ### How-to-run
     
